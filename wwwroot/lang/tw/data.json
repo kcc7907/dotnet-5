@@ -1,0 +1,15 @@
+{
+  "input": {
+    "placeholder": "請填寫"
+  },
+  "nav": {
+    "home": "首頁",
+    "page1": "第一頁",
+    "page2": "第二頁"
+  },
+  "h2": "標題 jquery-i18next",
+  "lang": "語言切換",
+  "id": "test-tw-id",
+  "test": "測試",
+  "lines": "這是 line 1.<br>這是 line 2.<br>這是 line 3."
+}

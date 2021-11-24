@@ -1,0 +1,41 @@
+@page "/counter/{text?}"
+@inject IJSRuntime JS
+
+<a href="/en">home/en</a>
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button id="btnEN">EN</button>
+<button id="btnTW">TW</button>
+<ul>
+  <li>
+    <p data-i18n="all"></p>
+  </li>
+  <li>
+    <p data-i18n="title"></p>
+  </li>
+  <li>
+    <p data-i18n="count"></p>
+  </li>
+</ul>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("testing", Text, "count");
+        }
+    }
+}

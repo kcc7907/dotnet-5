@@ -1,0 +1,74 @@
+@page "/{text?}"
+@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+@using Microsoft.Extensions.Logging
+@inject ILogger<Index> Logger
+
+<a href="/counter/en">count/en</a>
+<h1>Hello, world!</h1>
+<h3>thit is @Text</h3>
+<button @onclick="SetStock">test</button>
+<h3 data-i18n="lang"></h3>
+<button id="btnEN">EN</button>
+<button id="btnTW">TW</button>
+<select name="sec" id="select">
+  <option value="en">EN</option>
+  <option value="tw">TW</option>
+</select>
+<ul class="nav">
+  <li>
+    <p data-i18n="nav.home"></p>
+  </li>
+  <li>
+    <p data-i18n="nav.page1"></p>
+  </li>
+  <li>
+    <p data-i18n="nav.page2"></p>
+  </li>
+</ul>
+
+<div class="content">
+  <input data-i18n="[placeholder]input.placeholder" />
+</div><br>
+
+multiple attributes :
+<p data-i18n="[title]h2;[id]id;[data-test]test;test"></p><br>
+Not innerHtml :
+<p data-i18n="lines"></p><br>
+innerHtml :
+<p data-i18n="[html]lines"></p>
+
+
+@code {
+  [Parameter]
+  public string Text { get; set; }
+
+  private async Task SetStock()
+  {
+    var query = new Uri(NavigationManager.Uri).Query;
+    await JS.InvokeVoidAsync("testing", Text, query);
+  }
+
+
+  private string message = "Initial assigned message.";
+
+  protected override void OnAfterRender(bool firstRender)
+  {
+    if (firstRender)
+    {
+      Console.WriteLine("fitst");
+    }
+    else
+    {
+      Console.WriteLine("not fitst");
+    }
+  }
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      var query = new Uri(NavigationManager.Uri).Query;
+      await JS.InvokeVoidAsync("testing", Text, "index");
+    }
+  }
+}
